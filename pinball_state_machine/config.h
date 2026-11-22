@@ -26,7 +26,13 @@ const uint8_t PIN_SENS_TARGET_2        = 13;
 // --- Actuator Outputs ---
 const uint8_t PIN_ACT_COIN_RETURN      = A0; // Solenoid/Servo to refund penny
 const uint8_t PIN_ACT_AUDIO_TRIG       = A1; // Sound module trigger
-const uint8_t PIN_ACT_ATTRACT_LEDS     = A2; // Cabinet LED strip / relay
+const uint8_t PIN_WS2812B_DATA     = A2; // Cabinet LED strip / relay WS2812B Data Pin (via 330-ohm resistor)
+
+// ==========================================
+// WS2812B LED STRIP CONFIGURATION
+// ==========================================
+const uint16_t NUM_LEDS                = 30;  // Change to match your total LED count
+const uint8_t  LED_BRIGHTNESS          = 120; // 0-255 (120 keeps current draw safe & bright)
 
 // ==========================================
 // WI-FI ACCESS POINT SETTINGS (ESP32-S3 Display)

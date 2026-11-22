@@ -211,10 +211,28 @@ void transitionTo(GameState nextState) {
       playSound(4); // 1, 2, 3 countdown audio
       updateDisplay("3.. 2.. 1.. GO!", "Hit targets to score!", "PLAY");
       lastPeriodicTick = millis();
+
+      if (isTargetHit()) {
+        stats.targetsHit++;
+        stats.multiplier = 1 + (stats.targetsHit / 5);
+        stats.currentScore += (100 * stats.multiplier);
+        triggerTargetHitLEDs(); // <-- Triggers 180ms WS2812B gold flash
+        playSound(6);
+        delay(40);
+      }
+
       break;
 
     case STATE_GAMEOVER:
       Serial.println(F("\n=== ENTERING STATE_GAMEOVER ==="));
+      
+      updateLEDs((stats.currentScore >= stats.highScore) ? 6 : 5); // <-- High score celebration vs standard
+      
+      dispTimeRemaining = (TIME_GAMEOVER_DURATION - (now - telemetry.stateEntryTime)) / 1000;
+      if (now - telemetry.stateEntryTime >= TIME_GAMEOVER_DURATION) {
+        transitionTo(STATE_IDLE);
+      }
+
       // Turn off all sensor & actuator circuits
       setSubsystemsPower(false, false, false, false, false, false);
       savePersistentState(false); // Game completed cleanly; clear penny escrow
@@ -248,6 +266,7 @@ void setup() {
 void loop() {
   unsigned long now = millis();
   handleWebDisplayClient(); // Serve live ESP32-S3 scoreboard requests
+  updateAudio(); // Advance non-blocking piezo sounder melodies
 
   switch (currentState) {
     // ---------------------------------------------------------

@@ -1,0 +1,12 @@
+
+WS2812B strip
+
+• Connect A2 to the DIN pin on the WS2812B strip through a 330 Ω – 470 Ω resistor to protect the first LED from voltage spikes.
+• Power (5V & GND): Power the WS2812B strip from an external 5V power supply (each RGB LED draws up to ~60 mA at full white; 30 LEDs ≈ 1.8 A, which exceeds the Arduino's onboard 5V regulator). Connect the external 5V supply GND to the Arduino GND so they share a common ground, and place a 1000 µF capacitor across the strip's 5V and GND terminals.
+
+
+Piezo Sounder
+
+Passive Piezo (2-pin): Connect the positive (+) pin to A1 (with a 100 Ω – 220 Ω resistor in series to protect the microcontroller pin from capacitive spikes) and the negative (-) pin to GND.
+
+
