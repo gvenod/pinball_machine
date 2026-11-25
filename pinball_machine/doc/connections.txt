@@ -1,0 +1,35 @@
+
+400mm x 400mm cabinet
+
+WS2812B strip
+• Connect A2 to the DIN pin on the WS2812B strip through a 330 Ω – 470 Ω resistor to protect the first LED from voltage spikes.
+• Power (5V & GND): Power the WS2812B strip from an external 5V power supply (each RGB LED draws up to ~60 mA at full white; 30 LEDs ≈ 1.8 A, which exceeds the Arduino's onboard 5V regulator). Connect the external 5V supply GND to the Arduino GND so they share a common ground, and place a 1000 µF capacitor across the strip's 5V and GND terminals.
+
+
+Piezo Sounder
+• Passive Piezo (2-pin): Connect the positive (+) pin to A1 (with a 100 Ω – 220 Ω resistor in series to protect the microcontroller pin from capacitive spikes) and the negative (-) pin to GND.
+
+
+Elecrow CrowPanel 7.0" HMI (ESP32-S3, 800×480) 
+• dedicated 5V 2A supply via its USB-C or UART0 5V power pin (do not draw display backlight power from the UNO's 5V pin)
+• 3-wire UART serial link between the two boards
+    • UNO R4 TX (Pin D1 / Serial1) → Voltage Divider (1kΩ + 2kΩ to drop 5V to 3.3V) → CrowPanel UART0 RX (GPIO 44)
+    • UNO R4 RX (Pin D0 / Serial1) ← CrowPanel UART0 TX (GPIO 43) (direct 3.3V-to-5V is safe)
+    • UNO R4 GND ← CrowPanel GND
+
+
+Visual Grid Layout (800 × 480 px)
+
+• Row 1 (Y = 10 to 95, Height 85px — 3 Columns):
+	• Section 1 (X = 10..270): Player Name (playerName)
+	• Section 2 (X = 276..524): Bonus / Multiplier (multiplier & bonus)
+	• Section 3 (X = 530..790): Time Left (timeLeft in seconds)
+• Row 2 (Y = 101 to 265, Height 164px — 1 Full-Width Section):
+	• Section 4 (X = 10..790): Current Score (currentScore in giant 75px arcade digits)
+• Row 3 (Y = 271 to 355, Height 84px — 1 Full-Width Section):
+	• Section 5 (X = 10..790): Banner Message / Next-Step Tips (bannerMsg)
+• Row 4 (Y = 361 to 470, Height 109px — 4 Columns):
+	• Section 6 (X = 10..200): Machine High Score (highScore)
+	• Section 7 (X = 206..396): Bell Hits (bellHits)
+	• Section 8 (X = 402..592): Bumper Hits (bumperHits)
+	• Section 9 (X = 598..790): Path Hits (pathHits)
